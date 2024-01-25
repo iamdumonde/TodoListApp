@@ -5,8 +5,9 @@
         <!-- inputVue -->
         <InputVue @new-task="addTask" />
         <!-- Table -->
-        <Tablevue :tasks="tasks" @update-task="updateTask" @delete-task="deleteTask"
-        @update-task-status="updateTaskStatus" />
+        <Tablevue :tasks="tasks" @delete-task="deleteTask"
+        @update-task-status="updateTaskStatus"
+        @update-task="updateTask"/>
     </div>
 </template>
 <script setup>
@@ -24,6 +25,11 @@ const addTask = (task) => {
     tasks.value.push({ "task": task, status: 'À faire' });
 };
 
+// Modification d'une tâche
+const updateTask = (task) => {
+    const index = tasks.value.findIndex(t => t.task === task.task && t.status === task.status);
+    tasks.value[index] = task;
+}
 // Suppression d'une tâche
 const deleteTask = (taskIndex) => {
     tasks.value.splice(taskIndex, 1);

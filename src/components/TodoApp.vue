@@ -15,16 +15,12 @@
 import InputVue from './InputVue.vue';
 import Tablevue from './Tablevue.vue';
 import { ref } from 'vue';
-
-// Définit les variables et méthodes
 // Liste des tâches
 const tasks = ref([]);
-
 // Ajoute une tâche à la liste
 const addTask = (task) => {
     tasks.value.unshift({ "task": task, "status": 'À faire' });
 };
-
 // Modification d'une tâche
 const updateTask = (task) => {
     const index = tasks.value.findIndex(t => t.task === task.task && t.status === task.status);

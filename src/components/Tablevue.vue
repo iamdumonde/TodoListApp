@@ -19,14 +19,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="task in tasks" :key="task"
-                    @click.stop="task.status = task.status === 'Terminée' ? 'Terminée' : 'En cours'"
+                <tr v-for="(task, index) in tasks" :key="index"
                     class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                     <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         :class="{ 'text-green-500': task.status === 'En cours', 'text-red-500': task.status === 'Terminée' }">
                         {{ task.task }}
                     </td>
-                    <td class="px-6 py-4 text-center" @click.stop="updateTaskStatus(task, $event)"
+                    <td class="px-6 py-4 text-center" @click="updateTaskStatus(task, $event)"
                         :class="{ 'text-green-500': task.status === 'En cours', 'text-red-500': task.status === 'Terminée' }">
                         {{ task.status }}
                     </td>
@@ -34,7 +33,7 @@
                         <PencilIcon class="w-8" @click="$emit('update-task', task)" />
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <TrashIcon class="w-8" @click="$emit('delete-task', task)" />
+                        <TrashIcon class="w-8" @click="emitDeleteTask(index)" />
                     </td>
                 </tr>
             </tbody>
@@ -62,5 +61,14 @@ const updateTaskStatus = (task, event) => {
     // Émettre l'événement `update-task-status` avec le statut modifié 
     emit('update-task-status', { ...task, status: task.status })
 }
+
+const emit = defineEmits(['delete-task']);
+
+// Suppression de tâche
+const emitDeleteTask = (taskIndex) => {
+    emit('delete-task', taskIndex);
+}
+
+
 
 </script>

@@ -22,7 +22,7 @@ const tasks = ref([]);
 
 // Ajoute une tâche à la liste
 const addTask = (task) => {
-    tasks.value.push({ "task": task, status: 'À faire' });
+    tasks.value.unshift({ "task": task, "status": 'À faire' });
 };
 
 // Modification d'une tâche

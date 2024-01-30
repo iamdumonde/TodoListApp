@@ -14,22 +14,50 @@
 // import des composants
 import InputVue from './InputVue.vue';
 import Tablevue from './Tablevue.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useTodoStore } from '@/stores';
+
+// création d'une instance du magasin store de Pinia
+const store = useTodoStore();
+
 // Liste des tâches
-const tasks = ref([]);
+// const tasks = computed(() => store.tasks);
+const tasks = ref(store.tasks);
+
+// chargement des tâches
+store.loadTasks();
+
 // Ajoute une tâche à la liste
 const addTask = (task) => {
-    tasks.value.unshift({ "task": task, "status": 'À faire' });
+    store.addTask(task);
 };
+
 // Modification d'une tâche
 const updateTask = (task) => {
-    const index = tasks.value.findIndex(t => t.task === task.task && t.status === task.status);
-    tasks.value[index] = task;
+    store.updateTask(task);
 }
+
 // Suppression d'une tâche
 const deleteTask = (taskIndex) => {
-    tasks.value.splice(taskIndex, 1);
+    store.deleteTask(taskIndex);
 }
+
+
+// // Liste des tâches
+// const tasks = ref([]);
+// // Ajoute une tâche à la liste
+// const addTask = (task) => {
+//     tasks.value.unshift({ "task": task, "status": 'À faire' });
+// };
+// // Modification d'une tâche
+// const updateTask = (task) => {
+//     const index = tasks.value.findIndex(t => t.task === task.task && t.status === task.status);
+//     tasks.value[index] = task;
+// }
+// // Suppression d'une tâche
+// const deleteTask = (taskIndex) => {
+//     tasks.value.splice(taskIndex, 1);
+// }
 
 </script>
 <style scoped>

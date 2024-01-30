@@ -5,27 +5,29 @@
         <!-- inputVue -->
         <InputVue @new-task="addTask" />
         <!-- Table -->
-        <Tablevue :tasks="task" @delete-task="deleteTask"
-        @update-task-status="updateTaskStatus"
-        @update-task="updateTask"/>
+        <Tablevue :tasks="task" @delete-task="deleteTask" @update-task-status="updateTaskStatus"
+            @update-task="updateTask" />
     </div>
 </template>
 <script setup>
 // import des composants
 import InputVue from './InputVue.vue';
 import Tablevue from './Tablevue.vue';
-import { ref, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useTodoStore } from '@/stores';
 
 // création d'une instance du magasin store de Pinia
 const store = useTodoStore();
 
+// se charge lorsque le composant est monté...
+onMounted(() => {
+    // chargement des tâches
+    store.loadTasks();
+})
 // Liste des tâches
 // const tasks = computed(() => store.tasks);
 const task = ref(store.task);
 
-// chargement des tâches
-store.loadTasks();
 
 // Ajoute une tâche à la liste
 const addTask = (task) => {

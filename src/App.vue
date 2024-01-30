@@ -1,7 +1,5 @@
 <script setup>
-
 </script>
-
 <template>
   <div id="app">
     <nav>
@@ -13,6 +11,5 @@
     <router-view></router-view>
   </div>
 </template>
-
 <style></style>
 

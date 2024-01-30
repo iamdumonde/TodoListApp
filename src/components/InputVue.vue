@@ -9,9 +9,6 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { useTodoStore } from '@/stores';
-
-const store = useTodoStore();
 
 const task = ref('');
 

@@ -50,26 +50,32 @@ import { PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import { ref } from "vue";
 import { useTodoStore } from '@/stores';
 
+// instanciation
 const store = useTodoStore();
 // Définit la propriété `tasks`
-defineProps({
-    tasks: {
-        type: Array,
-        required: true,
-    },
-});
+// defineProps({
+//     tasks: {
+//         type: Array,
+//         required: true,
+//     },
+// });
 
+// des éléments à émettre
 const emit = defineEmits(['delete-task', 'update-task-status', 'update-task']);
 
-// Méthode pour mettre à jour le statut de la tâche
+// Méthode pour mettre à jour le statut de la tâche (avec Pinia)
 const updateTaskStatus = (task, event) => {
-    // Empêche le comportement par défaut du navigateur  
-    event.preventDefault()
-    // Met à jour le statut de la tâche 
-    task.status = task.status === "À faire" ? "En cours" : "Terminée"
-    // Émettre l'événement `update-task-status` avec le statut modifié 
-    emit('update-task-status', { ...task, status: task.status })
-}
+    event.preventDefault();
+    
+    const newStatus = task.status === "À faire" ? "En cours" : (task.status === "En cours" ? "Terminée" : "À faire");
+    task.status = newStatus;
+
+    // Émettre l'événement `update-task-status` avec le statut modifié
+    store.updateTaskStatus(task);
+
+    // Émettre l'événement personnalisé pour informer les composants parents
+    emit('update-task-status', { ...task, status: task.status });
+};
 
 // Suppression de tâche
 const emitDeleteTask = (taskIndex) => {

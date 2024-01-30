@@ -1,4 +1,5 @@
 import { createPinia } from 'pinia';
+import { v4 as uuidv4 } from 'uuid';
 
 export const pinia = createPinia();
 // Importer les fonctions nécessaires de Pinia
@@ -13,13 +14,16 @@ export const useTodoStore = defineStore('todoStore', {
     actions: {
         //sauvegarde des tâches avec du local storage
         saveTasks() {
-            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+            // tâche et son statut
+            const tasksWithStatus = this.tasks.map(task => ({ task: task.task, status: task.status }));
+            //stockage des tâches dans le localstorage sous forme de chaîne JSON
+            localStorage.setItem('tasks', JSON.stringify(tasksWithStatus));
         },
         //charger les tâches à partir du localStorage
         loadTasks() {
-            const savedTasks = JSON.parse(localStorage.getItem('tasks'));
+            const savedTasks = localStorage.getItem('tasks');
             if (savedTasks) {
-                this.tasks = savedTasks;
+                this.tasks = JSON.parse(savedTasks).map(({ task, status }) => ({ task, status }))
             }
         },
 
@@ -38,6 +42,14 @@ export const useTodoStore = defineStore('todoStore', {
         //Suppression de tâches
         deleteTask(taskIndex) {
             this.tasks.splice(taskIndex, 1);
+            this.saveTasks();
+        },
+
+        //mettre à jour le statut d'une tâche
+        updateTaskStatus(task) {
+            const updatedTask = { ...task, status: task.status === "À faire" ? "En cours" : (task.status === "En cours" ? "Terminée" : "À faire") };
+            const taskIndex = this.tasks.findIndex(t => t.task === task.task);
+            this.tasks.splice(taskIndex, 1, updatedTask);
             this.saveTasks();
         },
     },

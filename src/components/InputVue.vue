@@ -14,6 +14,13 @@ import { useTodoStore } from '@/stores';
 const store = useTodoStore();
 
 const task = ref('');
+
+// defineProps({
+//     tasks: {
+//         type: Array,
+//         required: true,
+//     },
+// });
 // propriété emit
 const emit = defineEmits(['new-task'])
 

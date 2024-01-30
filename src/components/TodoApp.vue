@@ -5,7 +5,7 @@
         <!-- inputVue -->
         <InputVue @new-task="addTask" />
         <!-- Table -->
-        <Tablevue :tasks="tasks" @delete-task="deleteTask"
+        <Tablevue :tasks="task" @delete-task="deleteTask"
         @update-task-status="updateTaskStatus"
         @update-task="updateTask"/>
     </div>
@@ -22,7 +22,7 @@ const store = useTodoStore();
 
 // Liste des tâches
 // const tasks = computed(() => store.tasks);
-const tasks = ref(store.tasks);
+const task = ref(store.task);
 
 // chargement des tâches
 store.loadTasks();
@@ -41,6 +41,10 @@ const updateTask = (task) => {
 const deleteTask = (taskIndex) => {
     store.deleteTask(taskIndex);
 }
+
+const updateTaskStatus = (task) => {
+    store.updateTaskStatus(task);
+};
 
 
 // // Liste des tâches

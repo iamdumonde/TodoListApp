@@ -8,22 +8,16 @@
     </div>
 </template>
 <script setup>
+// importation de la fonction 'ref' de Vue
 import { ref } from 'vue';
-
+// référence réactive  pour le modèle du champ texte (valeur par défaut : "")
 const task = ref('');
-
-// defineProps({
-//     tasks: {
-//         type: Array,
-//         required: true,
-//     },
-// });
-// propriété emit
+// fonction 'emit' pour émettre un évènement personnalisé 'new-task'
 const emit = defineEmits(['new-task'])
-
-// Réinitialiser le statut après ajout
+// fonction 'nouvelleTask' pour émettre l'évènement 'new-task' avec la valeur de 'task'
 const nouvelleTask = () => {
     emit('new-task', task.value);
+    // Rénitialisation de la variable 'task' à une chaîne vide après l'ajout d'une tâche
     task.value = '';
 };
 </script>

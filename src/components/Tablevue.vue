@@ -50,17 +50,10 @@ import { PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import { ref } from "vue";
 import { useTodoStore } from '@/stores';
 
-// instanciation
+// instanciation du store de Pinia
 const store = useTodoStore();
-// Définit la propriété `tasks`
-// defineProps({
-//     tasks: {
-//         type: Array,
-//         required: true,
-//     },
-// });
 
-// des éléments à émettre
+// Définition des émetteurs d'évènements personnalisés
 const emit = defineEmits(['delete-task', 'update-task-status', 'update-task']);
 
 // Méthode pour mettre à jour le statut de la tâche (avec Pinia)

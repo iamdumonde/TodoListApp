@@ -5,7 +5,7 @@
         <!-- inputVue -->
         <InputVue @new-task="addTask" />
         <!-- Table -->
-        <Tablevue :tasks="task" @delete-task="deleteTask" @update-task-status="updateTaskStatus"
+        <Tablevue :tasks="store.tasks" @delete-task="deleteTask" @update-task-status="updateTaskStatus"
             @update-task="updateTask" />
     </div>
 </template>
@@ -24,9 +24,6 @@ onMounted(() => {
     // chargement des tâches
     store.loadTasks();
 })
-// Liste des tâches
-// const tasks = computed(() => store.tasks);
-const task = ref(store.task);
 
 
 // Ajoute une tâche à la liste

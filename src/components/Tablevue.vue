@@ -45,31 +45,25 @@
         </table>
     </div>
 </template>
+
 <script setup>
 import { PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import { ref } from "vue";
 import { useTodoStore } from '@/stores';
-
 // instanciation du store de Pinia
 const store = useTodoStore();
-
 // Définition des émetteurs d'évènements personnalisés
 const emit = defineEmits(['delete-task', 'update-task-status', 'update-task']);
-
 // Méthode pour mettre à jour le statut de la tâche (avec Pinia)
 const updateTaskStatus = (task, event) => {
     event.preventDefault();
-    
     const newStatus = task.status === "À faire" ? "En cours" : (task.status === "En cours" ? "Terminée" : "À faire");
     task.status = newStatus;
-
     // Émettre l'événement `update-task-status` avec le statut modifié
     store.updateTaskStatus(task);
-
     // Émettre l'événement personnalisé pour informer les composants parents
     emit('update-task-status', { ...task, status: task.status });
 };
-
 // Suppression de tâche
 const emitDeleteTask = (taskIndex) => {
     emit('delete-task', taskIndex);
@@ -86,5 +80,4 @@ const stopEditingTask = (task) => {
     editingTask.value = null
     emit('update-task', task)
 }
-
 </script>

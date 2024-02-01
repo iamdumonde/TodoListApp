@@ -1,8 +1,8 @@
+// importation des modules
 import { createPinia } from 'pinia';
-
-export const pinia = createPinia();
-// Importer les fonctions nécessaires de Pinia
 import { defineStore } from 'pinia';
+// création du store Pinia
+export const pinia = createPinia();
 // Définir le store `todoStore`
 export const useTodoStore = defineStore('todoStore', {
     // Définir l'état initial du store
@@ -25,7 +25,6 @@ export const useTodoStore = defineStore('todoStore', {
                 this.tasks = JSON.parse(savedTasks).map(({ task, status }) => ({ task, status }))
             }
         },
-
         async addTask(task) {
             // Fonction pour ajouter une nouvelle tâche
             // Ajoute la tâche au début du tableau
@@ -43,7 +42,6 @@ export const useTodoStore = defineStore('todoStore', {
             this.tasks.splice(taskIndex, 1);
             await this.saveTasks();
         },
-
         //mettre à jour le statut d'une tâche
         async updateTaskStatus(task) {
             const updatedTask = { ...task, status: task.status === "À faire" ? "En cours" : (task.status === "En cours" ? "Terminée" : "À faire") };
